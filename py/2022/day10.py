@@ -1,9 +1,8 @@
 def cycleUp(cycle, reg, result, picture):
-    if (cycle%40 in [reg-1,reg,reg+1]): picture += "#"
-    else: picture += "."
+    if (cycle%40 in [reg-1,reg,reg+1]): picture += '\u2588'
+    else: picture += " "
     cycle += 1
-    if cycle in [20, 60, 100, 140, 180, 220]:
-        result += cycle * reg
+    if cycle in [20, 60, 100, 140, 180, 220]: result += cycle * reg
     return cycle, picture, result
 
 def process(f, draw = False):
