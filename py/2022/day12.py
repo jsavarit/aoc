@@ -10,6 +10,7 @@ def letsHike(f, fromAnyLowest = False):
     height = len(hMap)
     width = len(hMap[0])
     hMap[yS] = hMap[yS].replace('S', 'a')
+    hMap[yE] = hMap[yE].replace('E', '{')
 
     if fromAnyLowest:
         for y in range(len(hMap)):
@@ -25,8 +26,8 @@ def letsHike(f, fromAnyLowest = False):
         while queue:
             path = queue.popleft()
             x, y = path[-1]
-            if hMap[y][x] == 'E':
-                pathLength.append(len(path)+1)
+            if hMap[y][x] == '{':
+                pathLength.append(len(path)-1)
                 break
             for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
                 if 0 <= x2 < width and 0 <= y2 < height and (x2, y2) not in seen:
