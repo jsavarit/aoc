@@ -1,4 +1,4 @@
-def readCave(f):
+def cave(f, bottom = False):
     cave = [['.' for _ in range(1000)] for _ in range(1000)]
     path = []
     yMax = 0
@@ -13,16 +13,14 @@ def readCave(f):
                 for y in range(min(y1, y2), max(y1, y2)+1): cave[y][x1] = '#'
             else:
                 for x in range(min(x1, x2), max(x1, x2)+1): cave[y1][x] = '#'
-    return cave, yMax
-
-def p1(f):
-    cave, yMax = readCave(f)
     iter = 0
+    if bottom:
+        for x in range(len(cave[yMax+2])): cave[yMax+2][x] = "#"
     while True:
         iter += 1
         x, y = 500, 0
         while True:
-            if y > 800:
+            if not bottom and y > 800:
                 break
             elif cave[y+1][x] == ".":
                 y += 1
@@ -36,30 +34,16 @@ def p1(f):
             else:
                 cave[y][x] = "o"
                 break
-        if y < 800: continue
-        else: break
-    return iter-1
+        if bottom:
+            if x == 500 and y == 0: break
+            else: continue
+        else:
+            if y < 800: continue
+            else: break
+    return iter
+
+def p1(f):
+    return cave(f)-1
 
 def p2(f):
-    cave, yMax = readCave(f)
-    for x in range(len(cave[yMax+2])): cave[yMax+2][x] = "#"
-    iter = 0
-    while True:
-        iter += 1
-        x, y = 500, 0
-        while True:
-            if cave[y+1][x] == ".":
-                y += 1
-                continue
-            elif cave[y+1][x-1] == ".":
-                x, y = x-1, y+1
-                continue
-            elif cave[y+1][x+1] == ".":
-                x, y = x+1, y+1
-                continue
-            else:
-                cave[y][x] = "o"
-                break
-        if x == 500 and y == 0: break
-        else: continue
-    return iter
+    return cave(f, True)
